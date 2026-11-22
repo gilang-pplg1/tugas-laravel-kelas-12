@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         Sign In & Sign Up
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>						
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>            
       </div>
       <section>
         <div class="modal-body">
@@ -12,24 +12,31 @@
               <div class="toggle"><i class="fa fa-times fa-pencil"></i>
               <div class="tooltip">Click Me</div>
               </div>
+              
+              <!-- Form Login -->
               <div class="form">
               <h3>Login to your account</h3>
-              <form action="#" method="post">
-                <input type="text" name="Username" placeholder="Username" required="">
-                <input type="password" name="Password" placeholder="Password" required="">
+              <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <input type="email" name="email" placeholder="Email Address" required="">
+                <input type="password" name="password" placeholder="Password" required="">
                 <input type="submit" value="Login">
               </form>
               </div>
+
+              <!-- Form Register -->
               <div class="form">
               <h3>Create an account</h3>
-              <form action="#" method="post">
-                <input type="text" name="Username" placeholder="Username" required="">
-                <input type="password" name="Password" placeholder="Password" required="">
-                <input type="email" name="Email" placeholder="Email Address" required="">
-                <input type="text" name="Phone" placeholder="Phone Number" required="">
+              <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <input type="text" name="name" placeholder="Username / Name" required="">
+                <input type="email" name="email" placeholder="Email Address" required="">
+                <input type="password" name="password" placeholder="Password" required="">
+                <input type="password" name="password_confirmation" placeholder="Confirm Password" required="">
                 <input type="submit" value="Register">
               </form>
               </div>
+
               <div class="cta"><a href="#">Forgot your password?</a></div>
             </div>
           </div>
