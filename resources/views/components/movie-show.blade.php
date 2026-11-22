@@ -6,7 +6,6 @@
 @endpush
 
 @push('scripts')
-
 <script type="text/javascript" src="{{ asset('template/list-js/jquery.basictable.min.js') }}"></script>
  <script type="text/javascript">
     $(document).ready(function() {
@@ -31,8 +30,8 @@
       </ol>
     </div>
     <div class="single-page-agile-info">
-                 <!-- /movie-browse-agile -->
-                         <div class="show-top-grids-w3lagile">
+            <!-- /movie-browse-agile -->
+                       <div class="show-top-grids-w3lagile">
       <div class="col-sm-8 single-left">
         <div class="song">
           <div class="single-right-grids">
@@ -42,9 +41,26 @@
             </div>
             <div class="col-md-8 single-right-grid-right">
               <div class="song-info">
-                <h2>{{ $film->title }}</h2>	
+                <h2>{{ $film->title }}</h2> 
                 <p class="author"><a href="#" class="author">{{ $film->year }}</a></p>
                 <p class="views">{{ $film->sinopsis }}</p>
+
+                <!-- Tombol Edit & Hapus HANYA MUNCUL JIKA SUDAH LOGIN (ADMIN) -->
+                @auth
+                <div style="margin-top: 15px;">
+                    <a href="{{ route('movies.edit', $film->id) }}" class="btn btn-warning" style="background-color: #ff8d00; color: white; padding: 6px 15px; border-radius: 4px; text-decoration: none; font-weight: bold;">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Edit Film Ini
+                    </a>
+                   <form action="{{ route('movies.destroy', $film->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus film ini?');" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                       <button type="submit" class="btn btn-danger" style="background-color: #d9534f; color: white; padding: 6px 15px; border-radius: 4px; border: none; font-weight: bold;">
+                         <i class="fa fa-trash" aria-hidden="true"></i> Hapus Film
+                       </button>
+                   </form>
+                </div>
+                @endauth
+
               </div>
               <div id="myTabContent" class="tab-content">
                 <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
@@ -88,7 +104,7 @@
                 }(document, 'script', 'facebook-jssdk'));</script>
               </li>
               <li>
-                <div class="fb-share-button" data-href="https://www.facebook.com/w3layouts" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Fw3layouts&amp;src=sdkpreparse">Share</a></div>
+                <div class="fb-share-button" data-href="https://www.facebook.com/w3layouts" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.facebook.com%2Fw3layouts&src=sdkpreparse">Share</a></div>
               </li>
               <li class="news-twitter">
                 <a href="https://twitter.com/w3layouts" class="twitter-follow-button" data-show-count="false">Follow @w3layouts</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -119,7 +135,7 @@
             <a href="#">Comments</a>
             <div class="agile-info-wthree-box">
               <form>
-                <input type="text" placeholder="Name" required="">			           					   
+                <input type="text" placeholder="Name" required="">                            
                 <input type="text" placeholder="Email" required="">
                 <input type="text" placeholder="Phone" required="">
                 <textarea placeholder="Message" required=""></textarea>
@@ -177,7 +193,7 @@
               </a>
               <div class="mid-1 agileits_w3layouts_mid_1_home">
                 <div class="w3l-movie-text">
-                  <h6><a href="{{ route('movies.show', $filmRelease->id) }}">{{ $filmRelease->title }}</a></h6>							
+                  <h6><a href="{{ route('movies.show', $filmRelease->id) }}">{{ $filmRelease->title }}</a></h6>            
                 </div>
                 <div class="mid-2 agile_mid_2_home">
                   <p>{{ $filmRelease->year }}</p>
@@ -204,19 +220,17 @@
       </div>
     </div>
   <!--body wrapper end-->
-          
-             
       </div>
       <!-- //w3l-latest-movies-grids -->
-    </div>	
+    </div>  
   </div>
 @endsection
 
 @push('scripts')
 <script src="js/simplePlayer.js"></script>
 <script>
-	$("document").ready(function() {
-		$("#video").simplePlayer();
-	});
+  $("document").ready(function() {
+    $("#video").simplePlayer();
+  });
 </script>
 @endpush

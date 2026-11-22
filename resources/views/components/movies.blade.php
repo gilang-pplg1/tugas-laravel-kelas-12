@@ -9,10 +9,10 @@
           <div class="browse-agile-w3ls general-w3ls">
             <div class="tittle-head">
               @if ($genreFilm !== null)
-                      <h4 class="latest-text">Movies Of Genre {{ $genreFilm->name }}</h4>
-                    @else
-                      <h4 class="latest-text">List Of Movies</h4>
-                    @endif
+                    <h4 class="latest-text">Movies Of Genre {{ $genreFilm->name }}</h4>
+                @else
+                    <h4 class="latest-text">List Of Movies</h4>
+                @endif
               <div class="container">
                 <div class="agileits-single-top">
                   <ol class="breadcrumb">
@@ -29,40 +29,46 @@
             </div>
             <div class="container">
               <div class="browse-inner">
-              @for ($data = 0; $data < $films->count(); $data++)
-              <div class="col-md-2 w3l-movie-gride-agile">
-                <a href="{{ route('movies.show', $films[$data]->id) }}" class="hvr-shutter-out-horizontal"><img src="{{ asset($films[$data]->poster) }}" title="album-name" alt=" " />
+              
+              @forelse ($films as $film)
+              <div class="col-md-2 w3l-movie-gride-agile" style="margin-bottom: 25px;">
+                <a href="{{ route('movies.show', $film->id) }}" class="hvr-shutter-out-horizontal">
+                    <!-- POSTER DISESUAIKAN DENGAN FOLDER STORAGE -->
+                    <img src="{{ asset('storage/' . str_replace('storage/', '', $film->poster)) }}" title="album-name" alt="{{ $film->title }}" class="img-responsive" />
                   <div class="w3l-action-icon">
                     <i class="fa fa-play-circle" aria-hidden="true"></i>
                   </div>
                 </a>
                 <div class="mid-1">
                   <div class="w3l-movie-text">
-                    <h6><a href="{{ route('movies.show', $films[$data]->id) }}">{{ $films[$data]->title }}</a></h6>							
+                    <h6><a href="{{ route('movies.show', $film->id) }}">{{ $film->title }}</a></h6>            
                   </div>
                   <div class="mid-2">
-                    <p>{{ $films[$data]->year }}</p>
+                    <p>{{ $film->year }}</p>
                     <div class="block-stars">
                       <ul class="w3l-ratings">
-                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                          <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
                           <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
                           <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
                           <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
                           <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                            
-                  
                       </ul>
                     </div>
                     <div class="clearfix"></div>
                   </div>
                 </div>
-                @if ($films[$data]->year == now()->year)
+                @if ($film->year == now()->year)
                 <div class="ribben two">
                   <p>NEW</p>
                 </div>
                 @endif
               </div>
-                @endfor
+              @empty
+              <div class="col-md-12 text-center" style="padding: 40px;">
+                  <h3>Film tidak ditemukan.</h3>
+              </div>
+              @endforelse
+
               <div class="clearfix"> </div>
             </div>
               </div>
@@ -75,11 +81,11 @@
                         {{-- Previous Page Link --}}
                         @if ($films->onFirstPage())
                             <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                                <span class="frist" aria-hidden="true">&lsaquo; Prev</span>
+                                <span class="frist" aria-hidden="true">‹ Prev</span>
                             </li>
                         @else
                             <li>
-                                <a class="frist" href="{{ $films->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo; Prev</a>
+                                <a class="frist" href="{{ $films->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">‹ Prev</a>
                             </li>
                         @endif
                         {{-- <Number Page --}}
@@ -96,11 +102,11 @@
                         {{-- Next Page Link --}}
                         @if ($films->hasMorePages())
                             <li>
-                                <a class="frist" href="{{ $films->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">Next &rsaquo;</a>
+                                <a class="frist" href="{{ $films->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">Next ›</a>
                             </li>
                         @else
                             <li class="disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                                <span class="frist" aria-hidden="true">Next &rsaquo;</span>
+                                <span class="frist" aria-hidden="true">Next ›</span>
                             </li>
                         @endif
                     </ul>
@@ -109,7 +115,7 @@
           </div>
         </div>
     <!-- //movie-browse-agile -->
-    </div>	
+    </div>  
   </div>
 <!-- //w3l-medile-movies-grids -->
 </div>
